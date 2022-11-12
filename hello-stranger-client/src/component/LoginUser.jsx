@@ -1,6 +1,6 @@
 export default function LoginUser(props) {
     return(
-        <form>
+        <form onSubmit={props.login}>
             <strong>Login</strong>
             <label htmlFor="name">Email: </label>
             <input type="text" id="email" name="email"/>

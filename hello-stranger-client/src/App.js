@@ -27,8 +27,12 @@ export default function App() {
           'Content-Type': 'application/json'
         }
       })
-      console.log(response)
-      if(response.status === 201) {
+      console.log('response', response)
+      
+      const data = await response.json()
+      console.log(data)
+
+      if(response.status=== 200) {
         console.log('register is working')
         navigate("/login")
       }
@@ -37,10 +41,9 @@ export default function App() {
       console.log('Error => ', err)
     }
   }
+  
 
   const login = async (e) => {
-    console.log('loginUser')
-    console.log(e.target.email.value)
     e.preventDefault()
     const url = baseUrl + '/user/login'
     const loginBody = {
@@ -60,10 +63,15 @@ export default function App() {
   
         console.log(response)
         console.log("BODY: ",response.body)
-  
-        if (response.status === 200) {
-          navigate("/")
-        }
+        
+        const data = await response.json()
+        // console.log(data)
+        if(data.message || data.error) {
+          console.log('Invalid ID or password')
+          navigate("/login")
+        } else if (response.status === 200) {
+            navigate("/")
+          }
       }
       catch (err) {
         console.log('Error => ', err);
