@@ -1,14 +1,17 @@
 import './App.css';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import NavBar from './component/NavBar';
 import Home from './component/Home';
 import RegisterUser from './component/RegisterUser';
 import LoginUser from './component/LoginUser';
+import PostsList from "./component/PostList"
 
 let baseUrl = 'http://localhost:8000/hellostranger'
 
 export default function App() {
+  const [posts, setPosts] = useState([])
+
   const navigate = useNavigate()
 
   const register = async(e) => {
@@ -34,6 +37,7 @@ export default function App() {
 
       if(response.status=== 200) {
         console.log('register is working')
+        getPosts()
         navigate("/login")
       }
     }
@@ -44,6 +48,7 @@ export default function App() {
   
 
   const login = async (e) => {
+
     e.preventDefault()
     const url = baseUrl + '/user/login'
     const loginBody = {
@@ -78,6 +83,26 @@ export default function App() {
       }
     }
 
+    const getPosts = () => {
+      fetch(baseUrl + '/posts/', {
+        credentials: "include"
+      })
+      .then(res => {
+        if(res.status === 200) {
+          return res.json()
+        } else {
+          return []
+        }
+      }).then(data => {
+        console.log(data.data)
+        setPosts(data.data)
+      })
+    }
+
+    useEffect(()=>{
+      getPosts()
+    }, [])
+
   return (
     <>
       <NavBar />
@@ -85,6 +110,7 @@ export default function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/register" element={<RegisterUser register={register}/>}/>
         <Route path="/login" element={<LoginUser login={login}/>}/>
+        <Route path="/posts" element={<PostsList posts={posts}/>}/>
       </Routes>
     </>
   )
