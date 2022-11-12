@@ -5,7 +5,8 @@ import NavBar from './component/NavBar';
 import Home from './component/Home';
 import RegisterUser from './component/RegisterUser';
 import LoginUser from './component/LoginUser';
-import PostsList from "./component/PostList"
+import PostList from "./component/PostList"
+import PostDetail from "./component/PostDetail"
 
 let baseUrl = 'http://localhost:8000/hellostranger'
 
@@ -110,7 +111,8 @@ export default function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/register" element={<RegisterUser register={register}/>}/>
         <Route path="/login" element={<LoginUser login={login}/>}/>
-        <Route path="/posts" element={<PostsList posts={posts}/>}/>
+        <Route path="/posts" element={<PostList posts={posts}/>}/>
+        <Route path="/posts/:id" element={<PostDetail/>}/>
       </Routes>
     </>
   )
