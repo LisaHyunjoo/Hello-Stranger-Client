@@ -7,6 +7,7 @@ import RegisterUser from './component/RegisterUser';
 import LoginUser from './component/LoginUser';
 import PostList from "./component/PostList"
 import PostDetail from "./component/PostDetail"
+import WritePost from "./component/WritePost"
 
 let baseUrl = 'http://localhost:8000/hellostranger'
 
@@ -104,6 +105,31 @@ export default function App() {
       getPosts()
     }, [])
 
+    const addPost = (post) => {
+      fetch(baseUrl + '/posts/', {
+          method: 'POST',
+          body: JSON.stringify(
+              {title: post.title, 
+              content: post.content}),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: "include"
+        })
+  
+        .then((res) => {
+            if(res.status === 200) {
+                return res.json()
+            } else {
+                return []
+            }
+          }) .then(data => {
+          console.log('data', data.data)
+          getPosts()
+          navigate("/posts")
+        })
+      }
+
   return (
     <>
       <NavBar />
@@ -113,6 +139,7 @@ export default function App() {
         <Route path="/login" element={<LoginUser login={login}/>}/>
         <Route path="/posts" element={<PostList posts={posts}/>}/>
         <Route path="/posts/:id" element={<PostDetail/>}/>
+        <Route path="/posts/new" element={<WritePost addPost={addPost}/>}/>
       </Routes>
     </>
   )

@@ -29,6 +29,7 @@ const PostDetail = (props) => {
 
     return(
         <>
+            <h2>Post Detail</h2>
             <h3>{post.title}</h3>
             <h5>{post.content}</h5>
         </>

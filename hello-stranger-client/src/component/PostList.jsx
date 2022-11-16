@@ -1,3 +1,4 @@
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 
 const PostsList = (props) => {
@@ -13,6 +14,7 @@ const PostsList = (props) => {
                 </section>
             )
         })}
+         <button onClick={()=>{navigate("/posts/new")}}>New Post</button>
         </>
     )
 }
