@@ -34,6 +34,7 @@ const PostDetail = (props) => {
             <h3>{post.title}</h3>
             <h5>{post.content}</h5>
             <button onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
+            <button onClick={()=>{props.deletePost(post.id)}}>Delete</button>
         </>
     )
 }

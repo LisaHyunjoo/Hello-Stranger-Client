@@ -17,9 +17,9 @@ export default function App() {
   const navigate = useNavigate()
 
   const register = async(e) => {
-    e.preventDefault()
-    console.log(e.target)
-    const url = baseUrl + '/user/register'
+  e.preventDefault()
+  console.log(e.target)
+  const url = baseUrl + '/user/register'
     try {
       const response = await fetch(url, {
         method:'POST',
@@ -47,7 +47,7 @@ export default function App() {
       console.log('Error => ', err)
     }
   }
-  
+
 
   const login = async (e) => {
     e.preventDefault()
@@ -55,104 +55,120 @@ export default function App() {
     const loginBody = {
       email: e.target.email.value,
       password: e.target.password.value
-    }
+  }
 
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(loginBody),
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: "include"
-        })
-  
-        console.log(response)
-        console.log("BODY: ",response.body)
-        
-        const data = await response.json()
-        // console.log(data)
-        if(data.message || data.error) {
-          console.log('Invalid ID or password')
-          navigate("/login")
-        } else if (response.status === 200) {
-            navigate("/")
-          }
-      }
-      catch (err) {
-        console.log('Error => ', err);
-      }
-    }
-
-    const getPosts = () => {
-      fetch(baseUrl + '/posts/', {
-        credentials: "include"
-      })
-      .then(res => {
-        if(res.status === 200) {
-          return res.json()
-        } else {
-          return []
-        }
-      }).then(data => {
-        console.log(data.data)
-        setPosts(data.data)
-      })
-    }
-
-    useEffect(()=>{
-      getPosts()
-    }, [])
-
-    const addPost = (post) => {
-      fetch(baseUrl + '/posts/', {
-          method: 'POST',
-          body: JSON.stringify(
-              {title: post.title, 
-              content: post.content}),
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: "include"
-        })
-  
-        .then((res) => {
-            if(res.status === 200) {
-                return res.json()
-            } else {
-                return []
-            }
-          }) .then(data => {
-          console.log('data', data.data)
-          getPosts()
-          navigate("/posts")
-        })
-      }
-    
-    const updatePost = (post) => {
-      fetch(baseUrl + `/posts/${post.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          title:post.title,
-          content:post.content
-        }),
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(loginBody),
         headers: {
           'Content-Type': 'application/json'
         },
         credentials: "include"
       })
-      .then((res) => {
-          if(res.status === 200) {
-              return res.json()
-          } else {
-              return []
-          }
-        }) .then(data => {
-        console.log('edit data', data.data)
-        getPosts()
-        navigate(`/posts/${post.id}`)
-      })
+
+      console.log(response)
+      console.log("BODY: ",response.body)
+      
+      const data = await response.json()
+      // console.log(data)
+      if(data.message || data.error) {
+        console.log('Invalid ID or password')
+        navigate("/login")
+      } else if (response.status === 200) {
+          navigate("/")
+        }
     }
+    catch (err) {
+      console.log('Error => ', err);
+    }
+  }
+
+  const getPosts = () => {
+    fetch(baseUrl + '/posts/', {
+      credentials: "include"
+    })
+    .then(res => {
+      if(res.status === 200) {
+        return res.json()
+      } else {
+        return []
+      }
+    }).then(data => {
+      console.log(data.data)
+      setPosts(data.data)
+    })
+  }
+
+  useEffect(()=>{
+    getPosts()
+  }, [])
+
+  const addPost = (post) => {
+    fetch(baseUrl + '/posts/', {
+      method: 'POST',
+      body: JSON.stringify(
+          {title: post.title, 
+          content: post.content}),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: "include"
+    })
+
+    .then((res) => {
+        if(res.status === 200) {
+            return res.json()
+        } else {
+            return []
+        }
+      }) .then(data => {
+      console.log('data', data.data)
+      getPosts()
+      navigate("/posts")
+    })
+  }
+
+  const updatePost = (post) => {
+    fetch(baseUrl + `/posts/${post.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title:post.title,
+        content:post.content
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: "include"
+    })
+    .then((res) => {
+        if(res.status === 200) {
+            return res.json()
+        } else {
+            return []
+        }
+      }) .then(data => {
+      console.log('edit data', data.data)
+      getPosts()
+      navigate(`/posts/${post.id}`)
+    })
+  }
+
+  const deletePost = (id) => {
+    fetch(baseUrl + `/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: "include"
+    }).then (res => {
+      const copyPost = [...posts]
+      const findIndex = posts.findIndex(post => post.id === id)
+      copyPost.splice(findIndex, 1)
+      setPosts(copyPost)
+    })
+    navigate("/posts")
+  }
     
 
   return (
@@ -163,7 +179,7 @@ export default function App() {
         <Route path="/register" element={<RegisterUser register={register}/>}/>
         <Route path="/login" element={<LoginUser login={login}/>}/>
         <Route path="/posts" element={<PostList posts={posts}/>}/>
-        <Route path="/posts/:id" element={<PostDetail/>}/>
+        <Route path="/posts/:id" element={<PostDetail deletePost={deletePost}/>}/>
         <Route path="/posts/new" element={<WritePost addPost={addPost}/>}/>
         <Route path="/posts/:id/edit" element={<EditPost updatePost={updatePost}/>}/>
       </Routes>
