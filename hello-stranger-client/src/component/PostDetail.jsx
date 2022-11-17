@@ -1,9 +1,10 @@
 import React , {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const PostDetail = (props) => {
     let [post, setPost] = useState({})
     let {id} = useParams()
+    const navigate = useNavigate()
 
     let baseUrl = 'http://localhost:8000/hellostranger'
 
@@ -18,7 +19,7 @@ const PostDetail = (props) => {
                 return []
             }
         }) .then(data => {
-            console.log(data.data)
+            console.log('data',data.data)
             setPost(data.data)
         })
     }
@@ -32,6 +33,7 @@ const PostDetail = (props) => {
             <h2>Post Detail</h2>
             <h3>{post.title}</h3>
             <h5>{post.content}</h5>
+            <button onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
         </>
     )
 }

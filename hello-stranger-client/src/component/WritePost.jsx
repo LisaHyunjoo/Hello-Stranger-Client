@@ -23,6 +23,8 @@ const WritePost = (props) => {
 
  
     return(
+        <>
+        <h3>Write a new post</h3>
         <form onSubmit={handleSubmit}>
             <label htmlFor='title'>Title: </label>
             <input id="title" type="text" value={post.title} onChange={handleChange}/>
@@ -32,6 +34,7 @@ const WritePost = (props) => {
             <br/>
             <input type="submit" value="Add a post"/>
         </form>
+        </>
     )
 }
 
