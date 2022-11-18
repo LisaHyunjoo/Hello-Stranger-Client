@@ -5,7 +5,7 @@ const EditPost = (props) => {
     const [post, setPost] = useState({})
     let {id} = useParams()
 
-    let baseUrl = 'http://localhost:8000/hellostranger'
+    let baseUrl = 'http://localhost:8000'
 
     const getOnePostById = (id) => {
         fetch(baseUrl + "/posts/" + id, {
@@ -19,7 +19,7 @@ const EditPost = (props) => {
             }
           })
           .then((data) => {
-            console.log("this is the data: ", data.data);
+            // console.log("this is the data: ", data.data);
             setPost(data.data);
           });
       };
@@ -29,7 +29,7 @@ const EditPost = (props) => {
     }, []);
     
    const handleChange = (e) => {
-       console.log('value', e.target)
+    //    console.log('value', e.target)
         setPost((prev)=>({...post, [e.target.name]: e.target.value }))
         
     }

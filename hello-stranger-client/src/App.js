@@ -10,7 +10,7 @@ import PostDetail from "./component/PostDetail"
 import WritePost from "./component/WritePost"
 import EditPost from "./component/EditPost"
 
-let baseUrl = 'http://localhost:8000/hellostranger'
+let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
@@ -18,7 +18,7 @@ export default function App() {
 
   const register = async(e) => {
   e.preventDefault()
-  console.log(e.target)
+  // console.log(e.target)
   const url = baseUrl + '/user/register'
     try {
       const response = await fetch(url, {
@@ -95,14 +95,12 @@ export default function App() {
         return []
       }
     }).then(data => {
-      console.log(data.data)
+      // console.log(data.data)
       setPosts(data.data)
     })
   }
 
-  useEffect(()=>{
-    getPosts()
-  }, [])
+
 
   const addPost = (post) => {
     fetch(baseUrl + '/posts/', {
@@ -169,7 +167,10 @@ export default function App() {
     })
     navigate("/posts")
   }
-    
+  
+  useEffect(()=>{
+    getPosts();
+  }, [])
 
   return (
     <>
@@ -179,7 +180,7 @@ export default function App() {
         <Route path="/register" element={<RegisterUser register={register}/>}/>
         <Route path="/login" element={<LoginUser login={login}/>}/>
         <Route path="/posts" element={<PostList posts={posts}/>}/>
-        <Route path="/posts/:id" element={<PostDetail deletePost={deletePost}/>}/>
+        <Route path="/posts/:id" element={<PostDetail deletePost={deletePost} />}/>
         <Route path="/posts/new" element={<WritePost addPost={addPost}/>}/>
         <Route path="/posts/:id/edit" element={<EditPost updatePost={updatePost}/>}/>
       </Routes>
