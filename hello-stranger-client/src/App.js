@@ -76,7 +76,7 @@ export default function App() {
         console.log('Invalid ID or password')
         navigate("/login")
       } else if (response.status === 200) {
-          navigate("/")
+          navigate("/posts")
         }
     }
     catch (err) {

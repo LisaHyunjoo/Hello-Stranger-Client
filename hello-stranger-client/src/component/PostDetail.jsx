@@ -3,14 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 const PostDetail = (props) => {
     let [post, setPost] = useState({})
-    let [comment, setComment] = useState([])
+    let [comments, setComments] = useState([])
    
     let {id} = useParams()
     const navigate = useNavigate()
 
     let baseUrl = 'http://localhost:8000'
 
-    const getOnePostById = (id) => {
+    const getOnePostById = (post) => {
         fetch(baseUrl + '/posts/' + id, {
             credentials: "include"
         })
@@ -21,7 +21,7 @@ const PostDetail = (props) => {
                 return []
             }
         }) .then(data => {
-            // console.log('data',data.data)
+            console.log('data',data.data)
             setPost(data.data)
         })
     }
@@ -39,8 +39,24 @@ const PostDetail = (props) => {
       }
     }).then(data => {
     //   console.log(data.data)
-      setComment(data.data)
+      setComments(data.data)
     })
+  }
+
+  const deleteComment = (id) => {
+      fetch(baseUrl + '/posts/' + id + '/comment/' + id, {
+          method:'DELETE',
+          headers: {
+              'Content-Type':'application/json'
+          },
+          credentials:"include"
+      }). then(res => {
+          const copyComment = [...comments]
+          const findIndex = comments.findIndex(comment => comment.id === id)
+          copyComment.splice(findIndex, 1 )
+          setComments(copyComment)
+          navigate("/posts/:id")
+      })
   }
 
     useEffect(()=>{
@@ -55,11 +71,12 @@ const PostDetail = (props) => {
             <h2>Post Detail</h2>
             <h3>{post.title}</h3>
             <h3>{post.content}</h3>
-            {comment.map((comment,id)=> {
+            {comments.map((comment,id)=> {
             return(
                 <section key={comment.id}>
                     <h5 onClick={()=>{navigate(`${comment.id}`)}}>{comment.content}</h5>
-                </section>
+                    <button onClick={()=>{deleteComment(comment.id)}}>X</button> 
+                 </section>
             )
             })}
             <button onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
