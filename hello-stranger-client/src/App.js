@@ -9,6 +9,7 @@ import PostList from "./component/PostList"
 import PostDetail from "./component/PostDetail"
 import WritePost from "./component/WritePost"
 import EditPost from "./component/EditPost"
+import WriteComment from './component/WriteComment';
 
 let baseUrl = 'http://localhost:8000'
 
