@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
 import {Route, Routes, useNavigate, useParams} from 'react-router-dom';
-import NavBar from './component/NavBar';
+// import NavBar from './component/NavBar';
 import Home from './component/Home';
 import RegisterUser from './component/RegisterUser';
 import LoginUser from './component/LoginUser';
@@ -9,81 +9,91 @@ import PostList from "./component/PostList"
 import PostDetail from "./component/PostDetail"
 import WritePost from "./component/WritePost"
 import EditPost from "./component/EditPost"
+import {Navbar, Container } from 'react-bootstrap'
+import {Link} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-let baseUrl = process.env.REACT_APP_BACKEND_URL
-// let baseUrl = 'http://localhost:8000'
+
+// let baseUrl = process.env.REACT_APP_BACKEND_URL
+let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
+  const [user, setUser] = useState()
+  const [userRegister, setUserRegister] = useState(null)
+  const [userLogin, setUserLogin] = useState(null)
   const navigate = useNavigate()
 
   const register = async(e) => {
   e.preventDefault()
   // console.log(e.target)
-  const url = baseUrl + '/user/register'
-    try {
-      const response = await fetch(url, {
-        method:'POST',
-        body:JSON.stringify({
-          username: e.target.username.value,
-          email: e.target.email.value,
-          password: e.target.password.value
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      console.log('response', response)
-      
-      const data = await response.json()
-      console.log(data)
-
-      if(response.status=== 200) {
-        console.log('register is working')
-        getPosts()
-        navigate("/login")
-      }
-    }
-    catch (err) {
-      console.log('Error => ', err)
-    }
-  }
-
-
-  const login = async (e) => {
-    e.preventDefault()
-    const url = baseUrl + '/user/login'
-    const loginBody = {
+  fetch(baseUrl + '/user/register', {
+    method:'POST',
+    body:JSON.stringify({
+      username: e.target.username.value,
       email: e.target.email.value,
       password: e.target.password.value
-  }
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(loginBody),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: "include"
-      })
-
-      console.log(response)
-      console.log("BODY: ",response.body)
-      
-      const data = await response.json()
-      // console.log(data)
-      if(data.message || data.error) {
-        console.log('Invalid ID or password')
-        navigate("/login")
-      } else if (response.status === 200) {
-          navigate("/posts")
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+    })
+    .then (res => res.json())
+    .then (resJson => {
+        // console.log(resJson)
+        setUser(resJson.data.username)
+        localStorage.setItem('user', JSON.stringify(resJson.data.username))
+        if (resJson.status.code === 401) {
+            console.log('error', resJson.status.message)
+            setUserRegister(false)
+        } else {
+            setUser(e.target.username.value)
+            setUserRegister(true)
+            navigate('/login')
         }
+    })
     }
-    catch (err) {
-      console.log('Error => ', err);
+
+  const login = async (e) => {
+    e.preventDefault();
+    fetch(
+        baseUrl + "/user/login",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: e.target.email.value,
+            password: e.target.password.value,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        })
+        .then (res => res.json())
+        .then (resJson => {
+            // console.log(resJson)
+            setUser(e.target.email.value)
+            localStorage.setItem('user', JSON.stringify(resJson.data.email))
+            if (resJson.status.code === 401) {
+                setUserLogin(false)
+                alert("Username or Password is incorrect")
+            } else {
+                setUserLogin(true)
+                getPosts()
+                navigate("/posts")
+            }
+        })
     }
-  }
+
+    
+  const logout = (e) => {
+      e.preventDefault()
+      localStorage.clear()
+      setUser(null)
+      fetch(baseUrl + '/user/logout')
+      navigate('/')
+    }
 
   const getPosts = () => {
     fetch(baseUrl + '/posts/', {
@@ -100,7 +110,6 @@ export default function App() {
       setPosts(data.data)
     })
   }
-
 
 
   const addPost = (post) => {
@@ -175,7 +184,26 @@ export default function App() {
 
   return (
     <>
-      <NavBar />
+      <Navbar className="navbar navbar-expand-lg bg-info">
+        <Container className='nav-container'>
+          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+          <div>
+          {user !== undefined ? 
+           <div>
+           <Navbar.Brand as={Link} to="/" onClick={logout}>Logout</Navbar.Brand> 
+           </div>
+            :
+             <div>
+             <Navbar.Brand as={Link} to="/register">Register/</Navbar.Brand>
+             <Navbar.Brand as={Link} to="/login">Log In</Navbar.Brand> 
+            </div>
+          }
+          </div>
+          <Navbar.Brand as={Link} to="/posts">Posts</Navbar.Brand>
+        </Container>
+      </Navbar>
+
+
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/register" element={<RegisterUser register={register}/>}/>

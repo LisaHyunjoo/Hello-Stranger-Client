@@ -1,14 +1,27 @@
 export default function RegisterUser(props) {
     return(
-        <form id="register-form" onSubmit={props.register}>
-            <strong>Register</strong>
-            <label htmlFor="name">Username: </label>
-            <input type="text" id="name" name="username"/>
-            <label htmlFor="name">Email: </label>
-            <input type="text" id="email" name="email"/>
-            <label htmlFor="name">Password: </label>
-            <input type="text" id="password" name="password"/>
-            <input type="submit" value="signup"/>
+        <>
+        <form className="myForm" id="register-form" onSubmit={props.register}>
+            <div className="mb-3 row">
+                <label htmlFor="name"  className="col-sm-2 col-form-label">Username: </label>
+                    <div className="col-sm-10">
+                    <input type="text" name="username" className="form-control" id="username" />
+                    </div>
+            </div>
+            <div className="mb-3 row">
+                <label htmlFor="name"  className="col-sm-2 col-form-label">Email </label>
+                <div className="col-sm-10">
+                <input type="email" name="email" className="form-control" id="email" placeholder="example@email.com"/>
+                </div>
+            </div>
+            <div className="mb-3 row">
+                <label htmlFor="name"  className="col-sm-2 col-form-label">Password </label> 
+                <div className="col-sm-10">
+                <input type="password" id="password" name="password" className="form-control" />
+                </div>
+            </div>
+            <button type="submit" className="btn btn-primary">Sign Up</button>
         </form>
+        </>
     )
 }
