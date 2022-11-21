@@ -11,6 +11,7 @@ import WritePost from "./component/WritePost"
 import EditPost from "./component/EditPost"
 
 let baseUrl = process.env.REACT_APP_BACKEND_URL
+// let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
