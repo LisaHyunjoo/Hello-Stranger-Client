@@ -4,13 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Card, Row, Col} from 'react-bootstrap'
 
 const PostsList = (props) => {
-    
     const navigate = useNavigate()
     return(
         <>
         <button onClick={()=>{navigate("/posts/new")}} className="btn btn-primary">New Post</button>
+        
         {/* <Row xs={1} md={3} className="g-4">
-        {Array.from({ length: 6 }).map((_, idx) => (
+        {Array.from({ length: 6}).map((_, idx) => (
                <Col>
                <Card>
                  <Card.Img src="https://picsum.photos/800/400" alt="" />
@@ -21,11 +21,11 @@ const PostsList = (props) => {
         </Col>
         ))}
         </Row>  */}
-   
+    <div className="row row-cols-1 row-cols-md-3 g-4">
         {props.posts.map((post,id)=> {
             return(
                 <>
-                <div className="row row-cols-1 row-cols-md-3 g-4">
+               
                     <div className="col">
                     <div className="card">
                         <img src="https://picsum.photos/800/400" className="card-img-top" alt=""/>
@@ -34,10 +34,11 @@ const PostsList = (props) => {
                         </div>   
                     </div>
                     </div>
-                </div>
+                
                 </>
             )}
             )}
+            </div>
         </>
     )
 }

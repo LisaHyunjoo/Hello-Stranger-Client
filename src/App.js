@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
-import {Route, Routes, useNavigate, useParams} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 // import NavBar from './component/NavBar';
 import Home from './component/Home';
 import RegisterUser from './component/RegisterUser';
@@ -12,6 +12,7 @@ import EditPost from "./component/EditPost"
 import {Navbar, Container } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 
 // let baseUrl = process.env.REACT_APP_BACKEND_URL
@@ -69,16 +70,16 @@ export default function App() {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        })
-        .then (res => res.json())
-        .then (resJson => {
+        }).then (res => res.json())
+         .then (resJson => {
             // console.log(resJson)
-            setUser(e.target.email.value)
-            localStorage.setItem('user', JSON.stringify(resJson.data.email))
             if (resJson.status.code === 401) {
-                setUserLogin(false)
+                setUser(null)
                 alert("Username or Password is incorrect")
+
             } else {
+              setUser(e.target.email.value)
+              localStorage.setItem('user', JSON.stringify(resJson.data.email))
                 setUserLogin(true)
                 getPosts()
                 navigate("/posts")
@@ -117,14 +118,16 @@ export default function App() {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title, 
-          content: post.content}),
+          // country: post.country,
+          // state:post.state,
+          // city:post.city,
+          content: post.content
+        }),
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: "include"
-    })
-
-    .then((res) => {
+    }).then((res) => {
         if(res.status === 200) {
             return res.json()
         } else {
@@ -189,14 +192,14 @@ export default function App() {
           <Navbar.Brand className="nav-link active bg-info" aria-current="page" as={Link} to="/">Home</Navbar.Brand>
           <Navbar.Brand className="nav-link active bg-info" as={Link} to="/posts">Posts</Navbar.Brand>
           <>
-          {user !== undefined ? 
+          {user === null || user === undefined ? 
            <>
-           <Navbar.Brand className="nav-link active bg-info" as={Link} to="/" onClick={logout}>Logout</Navbar.Brand> 
+             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/register">Register</Navbar.Brand>
+             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/login">Log In</Navbar.Brand> 
            </>
             :
              <>
-             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/register">Register</Navbar.Brand>
-             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/login">Log In</Navbar.Brand> 
+             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/" onClick={logout}>Logout</Navbar.Brand> 
             </>
           }
           </>
