@@ -33,7 +33,7 @@ const WritePost = (props) => {
             </div>
 
             <div className="mb-3 row">
-            <label htmlFor='content' class="form-label">Content: </label>
+            <label htmlFor='content' className="form-label">Content: </label>
             <div className="col-sm-10">
             <textarea id="content" type="text" className="form-control" rows="10" value={post.content} onChange={handleChange}></textarea>
             </div>

@@ -185,21 +185,21 @@ export default function App() {
   return (
     <>
       <Navbar className="navbar navbar-expand-lg bg-info">
-        <Container className='nav-container'>
-          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
-          <div>
+        <Container className='nav-container bg-info'>
+          <Navbar.Brand className="nav-link active bg-info" aria-current="page" as={Link} to="/">Home</Navbar.Brand>
+          <Navbar.Brand className="nav-link active bg-info" as={Link} to="/posts">Posts</Navbar.Brand>
+          <>
           {user !== undefined ? 
-           <div>
-           <Navbar.Brand as={Link} to="/" onClick={logout}>Logout</Navbar.Brand> 
-           </div>
+           <>
+           <Navbar.Brand className="nav-link active bg-info" as={Link} to="/" onClick={logout}>Logout</Navbar.Brand> 
+           </>
             :
-             <div>
-             <Navbar.Brand as={Link} to="/register">Register</Navbar.Brand>
-             <Navbar.Brand as={Link} to="/login">Log In</Navbar.Brand> 
-            </div>
+             <>
+             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/register">Register</Navbar.Brand>
+             <Navbar.Brand className="nav-link active bg-info" as={Link} to="/login">Log In</Navbar.Brand> 
+            </>
           }
-          </div>
-          <Navbar.Brand as={Link} to="/posts">Posts</Navbar.Brand>
+          </>
         </Container>
       </Navbar>
 
