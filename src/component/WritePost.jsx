@@ -1,7 +1,4 @@
 import React, {useState, useEffect} from 'react'
-const Country = require('country-state-city').Country
-const State = require('country-state-city').State
-const City = require('country-state-city').City
 
 const WritePost = (props) => {
     const [post, setPost] = useState({
@@ -11,22 +8,32 @@ const WritePost = (props) => {
     })
 
     const [country, setCountry ] = useState([])
-    const [state, setState] = useState()
+    // const [countryId, setCountryId] = useState('')
     
     const getCountry = async() => {
         const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
         const conuntryList = await res.json();
-        console.log(conuntryList)
+        // console.log(conuntryList)
         setCountry(await conuntryList)
     }
 
+    // const getState = async() => {
+    //     const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
+    //     const stateList = await res.json();
+    //     console.log(stateList)
+    //     setCountry(await stateList)
+    // }
+
     useEffect(() => {
         getCountry()
+        // getState()
     }, [])
 
     const handleChange = (e) => {
-        setPost((prev)=>({...post, [e.target.id]: e.target.value}))
-        // setCountry((prev)=>({...post, [e.target.id]: e.target.value}))
+        setPost((prev)=>({...prev, [e.target.id]: e.target.value}))
+        console.log(e.target)
+        console.log(post)
+
     }
 
     const handleSubmit = (e) => {
@@ -35,11 +42,9 @@ const WritePost = (props) => {
         props.addPost(post)
         setPost({
             title:'',
+            country:'',
             content: ''
         })
-        // setCountry({
-        //     country:'',
-        // })
       };
  
     return(
@@ -54,19 +59,15 @@ const WritePost = (props) => {
             <select name="country" className='form-countrol' onChange={handleChange}>
                 <option>--Select Country--</option>
                 {country.map((countryget)=> (
-                    <option key={countryget.country_id} value={countryget.country_id}>{countryget.country_name}</option>
-                ))
-
-                }
+                    <option key={countryget.country_id} id="country" value={countryget.country_name}>{countryget.country_name}</option>
+                ))}
             </select>
-            <select name="state" className='form-countrol' onChange={handleChange}>
+            {/* <select name="state" className='form-countrol' onChange={handleChange}>
                 <option>--Select State--</option>
-                {country.map((countryget)=> (
-                    <option key={countryget.country_id} value={countryget.country_id}>{countryget.country_name}</option>
-                ))
-
-                }
-            </select>
+                {state.map((stateget)=> (
+                    <option key={stateget.state_id} value={stateget.state_id}>{stateget.state_name}</option>
+                ))}
+            </select> */}
 
             <div className="mb-3 row">
             <label htmlFor='content' className="form-label">Content: </label>

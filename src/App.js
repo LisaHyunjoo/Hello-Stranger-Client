@@ -20,7 +20,7 @@ let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
-  const [user, setUser] = useState()
+  const [user, setUser] = useState(null)
   const [userRegister, setUserRegister] = useState(null)
   const [userLogin, setUserLogin] = useState(null)
   const navigate = useNavigate()
@@ -59,31 +59,32 @@ export default function App() {
   const login = async (e) => {
     e.preventDefault();
     fetch(
-        baseUrl + "/user/login",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: e.target.email.value,
-            password: e.target.password.value,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }).then (res => res.json())
-         .then (resJson => {
-            // console.log(resJson)
-            if (resJson.status.code === 401) {
-                setUser(null)
-                alert("Username or Password is incorrect")
+      baseUrl + "/user/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: e.target.email.value,
+          password: e.target.password.value,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }).then (res => res.json())
+        .then (resJson => {
+          // console.log(resJson)
+          if (resJson.status.code === 401) {
+              setUser(null)
+              alert("Username or Password is incorrect")
 
-            } else {
-              setUser(e.target.email.value)
-              localStorage.setItem('user', JSON.stringify(resJson.data.email))
-                setUserLogin(true)
-                getPosts()
-                navigate("/posts")
-            }
+          } else {
+            setUser(e.target.email.value)
+            localStorage.setItem('user', JSON.stringify(resJson.data.email))
+              console.log(user)
+              setUserLogin(true)
+              getPosts()
+              navigate("/posts")
+          }
         })
     }
 
@@ -118,7 +119,7 @@ export default function App() {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title, 
-          // country: post.country,
+          country: post.country,
           // state:post.state,
           // city:post.city,
           content: post.content
@@ -183,6 +184,7 @@ export default function App() {
   
   useEffect(()=>{
     getPosts();
+    console.log(user)
   }, [])
 
   return (
@@ -192,7 +194,7 @@ export default function App() {
           <Navbar.Brand className="nav-link active bg-info" aria-current="page" as={Link} to="/">Home</Navbar.Brand>
           <Navbar.Brand className="nav-link active bg-info" as={Link} to="/posts">Posts</Navbar.Brand>
           <>
-          {user === null || user === undefined ? 
+          {!localStorage.getItem("user")  ? 
            <>
              <Navbar.Brand className="nav-link active bg-info" as={Link} to="/register">Register</Navbar.Brand>
              <Navbar.Brand className="nav-link active bg-info" as={Link} to="/login">Log In</Navbar.Brand> 

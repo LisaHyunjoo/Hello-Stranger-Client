@@ -1,15 +1,6 @@
 import React , {useState, useEffect} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import WriteComment from './WriteComment'
-const Country = require('country-state-city').Country
-const State = require('country-state-city').State
-const City = require('country-state-city').City
-// console.log(Country.getAllCountries())
-// console.log(Country.getCountryByCode('IN'))
-// console.log(State.getStateByCode("TN"))
-// console.log(State.getStatesOfCountry('US'))
-// console.log(City.getAllCities('VA'))
-
 
 const PostDetail = (props) => {
     let [post, setPost] = useState({})
@@ -31,7 +22,7 @@ const PostDetail = (props) => {
                 return []
             }
         }) .then(data => {
-            // console.log('data',data.data)
+            console.log('data',data.data)
             setPost(data.data)
         })
     }
@@ -107,8 +98,8 @@ const PostDetail = (props) => {
       <div className="card text">
         <h3 className="card-header">{post.title}</h3>
         <div className="card-body">
-        {/* <h5 className="card-text">{post.country}</h5>
-        <h5 className="card-text">{post.state}</h5>
+        <h5 className="card-text">{post.country}</h5>
+        {/* <h5 className="card-text">{post.state}</h5>
         <h5 className="card-text">{post.city}</h5> */}
         <h5 className="card-text">{post.content}</h5>
         </div>
