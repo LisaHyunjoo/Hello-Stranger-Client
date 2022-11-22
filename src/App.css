@@ -41,8 +41,18 @@
   background-color: rgb(242, 242, 234);
 }
 
-.myForm {
+.UserForm {
   width: 500px;
   text-align: center;
   margin: 30px auto;
 }
+
+.PostForm {
+  width: 70%;
+  margin: 30px auto;
+}
+
+
+/* .card {
+  width: 18rem;
+} */

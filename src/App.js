@@ -194,7 +194,7 @@ export default function App() {
            </div>
             :
              <div>
-             <Navbar.Brand as={Link} to="/register">Register/</Navbar.Brand>
+             <Navbar.Brand as={Link} to="/register">Register</Navbar.Brand>
              <Navbar.Brand as={Link} to="/login">Log In</Navbar.Brand> 
             </div>
           }

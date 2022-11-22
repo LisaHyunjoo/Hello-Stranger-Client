@@ -1,7 +1,7 @@
 export default function RegisterUser(props) {
     return(
         <>
-        <form className="myForm" id="register-form" onSubmit={props.register}>
+        <form className="UserForm" id="register-form" onSubmit={props.register}>
             <div className="mb-3 row">
                 <label htmlFor="name"  className="col-sm-2 col-form-label">Username: </label>
                     <div className="col-sm-10">
