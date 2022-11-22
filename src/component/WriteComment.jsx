@@ -22,11 +22,16 @@ const WriteComment = (props) => {
  
     return(
         <>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor='content'>Comment: </label>
-            <textarea id="content" type="text" value={comment.content} onChange={handleChange}></textarea>
-            <br/>
-            <input type="submit" value="Add a comment"/>
+        <form className="row g-3" onSubmit={handleSubmit}>
+            <div className="col-auto">
+            <label htmlFor='content'  className="form-label">Comment: </label>
+            </div>
+            <div className="col-auto">
+            <input id="content" type="text" className="form-control"  value={comment.content} onChange={handleChange}></input>
+            </div>
+            <div className="col-auto">
+            <button type="submit" className="btn btn-primary mb-3">Add a comment</button>
+            </div>
         </form>
         </>
     )

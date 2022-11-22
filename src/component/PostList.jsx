@@ -8,9 +8,8 @@ const PostsList = (props) => {
     const navigate = useNavigate()
     return(
         <>
-        <h2>Post List</h2>
         <button onClick={()=>{navigate("/posts/new")}} className="btn btn-primary">New Post</button>
-        <Row xs={1} md={3} className="g-4">
+        {/* <Row xs={1} md={3} className="g-4">
         {Array.from({ length: 6 }).map((_, idx) => (
                <Col>
                <Card>
@@ -21,10 +20,9 @@ const PostsList = (props) => {
           </Card>
         </Col>
         ))}
-            
-        </Row> 
+        </Row>  */}
    
-        {/* {props.posts.map((post,id)=> {
+        {props.posts.map((post,id)=> {
             return(
                 <>
                 <div className="row row-cols-1 row-cols-md-3 g-4">
@@ -39,7 +37,7 @@ const PostsList = (props) => {
                 </div>
                 </>
             )}
-            )} */}
+            )}
         </>
     )
 }

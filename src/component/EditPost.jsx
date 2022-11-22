@@ -56,7 +56,7 @@ const EditPost = (props) => {
         </div>
 
         <div className="mb-3 row">
-          <label htmlFor='content' class="form-label">Content: </label>
+          <label htmlFor='content' className="form-label">Content: </label>
           <div className="col-sm-10">
           <textarea id="content" name="content" type="text" class="form-control" rows="10" value={post.content} onChange={handleChange}></textarea>
           </div>

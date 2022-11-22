@@ -56,7 +56,7 @@ const PostDetail = (props) => {
     })
 
     .then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         if(res.status === 200) {
             return res.json()
         } else {
@@ -94,22 +94,30 @@ const PostDetail = (props) => {
 
  
     return(
-        <>
-            <h2>Post Detail</h2>
-            <h3>{post.title}</h3>
-            <h3>{post.content}</h3>
-            <WriteComment addComment={addComment}/>
-            {comments.map((comment,id)=> {
-            return(
-                <section key={comment.id}>
-                    <h5 onClick={()=>{navigate(`${comment.id}`)}}>{comment.content}</h5>
-                    <button onClick={()=>{deleteComment(comment.id)}}>X</button> 
-                 </section>
-            )
-            })}
-            <button onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
-            <button onClick={()=>{props.deletePost(post.id)}}>Delete</button>
-        </>
+    <>
+      <div className="card text">
+        <h3 className="card-header">{post.title}</h3>
+        <div className="card-body">
+        <h5 className="card-text">{post.content}</h5>
+        </div>
+      </div>
+      <button className="btn btn-warning" onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
+      <button className="btn btn-danger" onClick={()=>{props.deletePost(post.id)}}>Delete</button>
+
+      <WriteComment addComment={addComment}/>
+        {comments.map((comment,id)=> {
+        return(
+          <section className="row g-2" key={comment.id}>
+             <div className="col-auto">
+            <h5>{comment.content}</h5>
+            </div>
+            <div className="col-auto">
+            <button className="btn btn-secondary mb-2" onClick={()=>{deleteComment(comment.id)}}>X</button> 
+            </div>
+          </section>
+        )
+        })}
+    </>
     )
 }
 
