@@ -15,8 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 
-let baseUrl = process.env.REACT_APP_BACKEND_URL
-// let baseUrl = 'http://localhost:8000'
+// let baseUrl = process.env.REACT_APP_BACKEND_URL
+let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
@@ -119,7 +119,7 @@ export default function App() {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title, 
-          country: post.country,
+          // country: post.country,
           // state:post.state,
           // city:post.city,
           content: post.content

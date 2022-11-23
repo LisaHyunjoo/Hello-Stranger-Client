@@ -3,7 +3,7 @@ import React, {useState, useEffect, useRef} from 'react'
 const WritePost = (props) => {
     const [post, setPost] = useState({
         title: '',
-        country: '',
+        // country: '',
         content: ''
     })
 
@@ -12,16 +12,16 @@ const WritePost = (props) => {
     const [imgList, setImgList] = useState([])
     const [viewBoolean, setViewBoolean] = useState(false)
     
-    const getCountry = async() => {
-        const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
-        const countryListAll = await res.json();
-        console.log(countryListAll)
-        setCountryList(await countryListAll)
-    }
+    // const getCountry = async() => {
+    //     const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
+    //     const countryListAll = await res.json();
+    //     console.log(countryListAll)
+    //     setCountryList(await countryListAll)
+    // }
 
-    useEffect(() => {
-        getCountry()
-    }, [])
+    // useEffect(() => {
+    //     getCountry()
+    // }, [])
 
     const handleChange = (e) => {
         setPost((prev)=>({...prev, [e.target.id]: e.target.value}))
@@ -36,7 +36,7 @@ const WritePost = (props) => {
         props.addPost(post)
         setPost({
             title:'',
-            country:'',
+            // country:'',
             content: ''
         })
       };
@@ -51,12 +51,12 @@ const WritePost = (props) => {
             </div>
             </div>
 
-            <select name="country" className='form-countrol' onChange={handleChange}>
+            {/* <select name="country" className='form-countrol' onChange={handleChange}>
                 <option>--Select Country--</option>
                 {countryList.map((countryget)=> (
                     <option key={countryget.country_id} id="country" value={countryget.country_name}>{countryget.country_name}</option>
                 ))}
-            </select>
+            </select> */}
         
             {/* <input className="file-upload-input" type='file' ref={imgRef} onChange={(event) => {
                 const file = event.currentTarget.files[0]
