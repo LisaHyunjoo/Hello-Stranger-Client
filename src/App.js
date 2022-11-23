@@ -15,8 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 
-// let baseUrl = process.env.REACT_APP_BACKEND_URL
-let baseUrl = 'http://localhost:8000'
+let baseUrl = process.env.REACT_APP_BACKEND_URL
+// let baseUrl = 'http://localhost:8000'
 
 export default function App() {
   const [posts, setPosts] = useState([])
@@ -28,7 +28,7 @@ export default function App() {
   const register = async(e) => {
   e.preventDefault()
   // console.log(e.target)
-  fetch(baseUrl + '/user/register', {
+  fetch(baseUrl + '/api/v1/user/register', {
     method:'POST',
     body:JSON.stringify({
       username: e.target.username.value,
@@ -59,7 +59,7 @@ export default function App() {
   const login = async (e) => {
     e.preventDefault();
     fetch(
-      baseUrl + "/user/login",
+      baseUrl + "/api/v1/user/login",
       {
         method: "POST",
         body: JSON.stringify({
@@ -80,7 +80,7 @@ export default function App() {
           } else {
             setUser(e.target.email.value)
             localStorage.setItem('user', JSON.stringify(resJson.data.email))
-              console.log(user)
+              // console.log(user)
               setUserLogin(true)
               getPosts()
               navigate("/posts")
@@ -93,12 +93,12 @@ export default function App() {
       e.preventDefault()
       localStorage.clear()
       setUser(null)
-      fetch(baseUrl + '/user/logout')
+      fetch(baseUrl + '/api/v1/user/logout')
       navigate('/')
     }
 
   const getPosts = () => {
-    fetch(baseUrl + '/posts/', {
+    fetch(baseUrl + '/api/v1/posts/', {
       credentials: "include"
     })
     .then(res => {
@@ -115,7 +115,7 @@ export default function App() {
 
 
   const addPost = (post) => {
-    fetch(baseUrl + '/posts/', {
+    fetch(baseUrl + '/api/v1/posts/', {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title, 
@@ -126,6 +126,7 @@ export default function App() {
         }),
       headers: {
         'Content-Type': 'application/json'
+
       },
       credentials: "include"
     }).then((res) => {
@@ -142,7 +143,7 @@ export default function App() {
   }
 
   const updatePost = (post) => {
-    fetch(baseUrl + `/posts/${post.id}`, {
+    fetch(baseUrl + `/api/v1/posts/${post.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title:post.title,
@@ -167,13 +168,13 @@ export default function App() {
   }
 
   const deletePost = (id) => {
-    fetch(baseUrl + `/posts/${id}`, {
+    fetch(baseUrl + `/api/v1/posts/${id}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: "include"
-    }).then (res => {
+    }).then ((res) => {
       const copyPost = [...posts]
       const findIndex = posts.findIndex(post => post.id === id)
       copyPost.splice(findIndex, 1)
@@ -184,7 +185,7 @@ export default function App() {
   
   useEffect(()=>{
     getPosts();
-    console.log(user)
+    // console.log(user)
   }, [])
 
   return (

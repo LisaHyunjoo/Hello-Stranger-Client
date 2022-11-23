@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
 const WritePost = (props) => {
     const [post, setPost] = useState({
@@ -7,32 +7,26 @@ const WritePost = (props) => {
         content: ''
     })
 
-    const [country, setCountry ] = useState([])
-    // const [countryId, setCountryId] = useState('')
+    const [countryList, setCountryList ] = useState([])
+    const imgRef = useRef(null)
+    const [imgList, setImgList] = useState([])
+    const [viewBoolean, setViewBoolean] = useState(false)
     
     const getCountry = async() => {
         const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
-        const conuntryList = await res.json();
-        // console.log(conuntryList)
-        setCountry(await conuntryList)
+        const countryListAll = await res.json();
+        console.log(countryListAll)
+        setCountryList(await countryListAll)
     }
-
-    // const getState = async() => {
-    //     const res = await fetch("https://raw.githubusercontent.com/devopsdeveloper1107/Country-state-city-table-in-json/main/Country-State-Data-In-JSON")
-    //     const stateList = await res.json();
-    //     console.log(stateList)
-    //     setCountry(await stateList)
-    // }
 
     useEffect(() => {
         getCountry()
-        // getState()
     }, [])
 
     const handleChange = (e) => {
         setPost((prev)=>({...prev, [e.target.id]: e.target.value}))
-        console.log(e.target)
-        console.log(post)
+        console.log('target', e.target)
+        console.log('post', post)
 
     }
 
@@ -56,18 +50,40 @@ const WritePost = (props) => {
             <input id="title" type="text" className="form-control" value={post.title} onChange={handleChange}/>
             </div>
             </div>
+
             <select name="country" className='form-countrol' onChange={handleChange}>
                 <option>--Select Country--</option>
-                {country.map((countryget)=> (
+                {countryList.map((countryget)=> (
                     <option key={countryget.country_id} id="country" value={countryget.country_name}>{countryget.country_name}</option>
                 ))}
             </select>
-            {/* <select name="state" className='form-countrol' onChange={handleChange}>
-                <option>--Select State--</option>
-                {state.map((stateget)=> (
-                    <option key={stateget.state_id} value={stateget.state_id}>{stateget.state_name}</option>
-                ))}
-            </select> */}
+        
+            {/* <input className="file-upload-input" type='file' ref={imgRef} onChange={(event) => {
+                const file = event.currentTarget.files[0]
+                const fileReader = new FileReader()
+                fileReader.readAsDataURL(file)
+                fileReader.onloadend = (e) => {
+                    setImgList((pre) => {
+                        return [...pre, e.target.result]
+                    })
+                } 
+                event.currentTarget.value=''
+                setViewBoolean(true)
+            }} />
+
+            {viewBoolean ? <></> : <div>Choose Image</div>}
+            {imgList.map((img, idx) => (
+                <div>
+                    <Image Key={img + idx} src={img}></Image> 
+                </div>
+            )) }
+            <div>
+            <button className='add-button' onClick={()=>{
+                imgRef.current.click()
+            }}>Add File</button>
+            </div>  
+ */}
+
 
             <div className="mb-3 row">
             <label htmlFor='content' className="form-label">Content: </label>
