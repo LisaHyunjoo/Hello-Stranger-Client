@@ -98,7 +98,7 @@ export default function App() {
     }
 
   const getPosts = () => {
-    fetch(baseUrl + '/api/v1/posts/', {
+    fetch(baseUrl + '/api/v1/posts', {
       credentials: "include"
     })
     .then(res => {
@@ -115,7 +115,7 @@ export default function App() {
 
 
   const addPost = (post) => {
-    fetch(baseUrl + '/api/v1/posts/', {
+    fetch(baseUrl + '/api/v1/posts', {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title, 
