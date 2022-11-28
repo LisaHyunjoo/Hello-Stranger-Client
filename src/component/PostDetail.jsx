@@ -9,7 +9,7 @@ const PostDetail = (props) => {
     let {id} = useParams()
     const navigate = useNavigate()
 
-    let baseUrl = 'http://localhost:8000'
+    let baseUrl = 'http://localhost:8000/api/v1'
 
     const getOnePostById = (post) => {
         fetch(baseUrl + '/posts/' + id, {
@@ -98,7 +98,6 @@ const PostDetail = (props) => {
       <div className="card text">
         <h3 className="card-header">{post.title}</h3>
         <div className="card-body">
-        {/* <h5 className="card-text">{post.country}</h5> */}
         <h5 className="card-text">{post.content}</h5>
         </div>
       </div>

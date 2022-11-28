@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 // let baseUrl = process.env.REACT_APP_BACKEND_URL
-let baseUrl = 'http://localhost:8000'
+let baseUrl = 'http://localhost:8000/api/v1'
 
 export default function App() {
   const [posts, setPosts] = useState([])
@@ -28,7 +28,7 @@ export default function App() {
   const register = async(e) => {
   e.preventDefault()
   // console.log(e.target)
-  fetch(baseUrl + '/api/v1/user/register', {
+  fetch(baseUrl + '/user/register', {
     method:'POST',
     body:JSON.stringify({
       username: e.target.username.value,
@@ -59,7 +59,7 @@ export default function App() {
   const login = async (e) => {
     e.preventDefault();
     fetch(
-      baseUrl + "/api/v1/user/login",
+      baseUrl + "/user/login",
       {
         method: "POST",
         body: JSON.stringify({
@@ -93,13 +93,13 @@ export default function App() {
       e.preventDefault()
       localStorage.clear()
       setUser(null)
-      fetch(baseUrl + '/api/v1/user/logout')
+      fetch(baseUrl + '/user/logout')
       navigate('/')
     }
 
   const getPosts = () => {
-    fetch(baseUrl + '/api/v1/posts', {
-      credentials: "include"
+    fetch(baseUrl + '/posts/', {
+      credentials: 'include'
     })
     .then(res => {
       if(res.status === 200) {
@@ -108,20 +108,17 @@ export default function App() {
         return []
       }
     }).then(data => {
-      // console.log(data.data)
+      console.log(data.data)
       setPosts(data.data)
     })
   }
 
 
   const addPost = (post) => {
-    fetch(baseUrl + '/api/v1/posts', {
+    fetch(baseUrl + '/posts', {
       method: 'POST',
       body: JSON.stringify(
-          {title: post.title, 
-          // country: post.country,
-          // state:post.state,
-          // city:post.city,
+          {title: post.title,
           content: post.content
         }),
       headers: {
@@ -143,7 +140,7 @@ export default function App() {
   }
 
   const updatePost = (post) => {
-    fetch(baseUrl + `/api/v1/posts/${post.id}`, {
+    fetch(baseUrl + `/posts/${post.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title:post.title,
@@ -168,7 +165,7 @@ export default function App() {
   }
 
   const deletePost = (id) => {
-    fetch(baseUrl + `/api/v1/posts/${id}`, {
+    fetch(baseUrl + `/posts/${id}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'
@@ -184,7 +181,7 @@ export default function App() {
   }
   
   useEffect(()=>{
-    getPosts();
+    getPosts()
     // console.log(user)
   }, [])
 

@@ -1,7 +1,7 @@
 import React , {useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Card, Row, Col} from 'react-bootstrap'
+// import {Card, Row, Col} from 'react-bootstrap'
 
 const PostsList = (props) => {
     const navigate = useNavigate()
