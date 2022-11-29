@@ -3,13 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import WriteComment from './WriteComment'
 
 const PostDetail = (props) => {
-    let [post, setPost] = useState({})
-    let [comments, setComments] = useState([])
-   
-    let {id} = useParams()
-    const navigate = useNavigate()
+  let [post, setPost] = useState({})
+  let [comments, setComments] = useState([])
+  let {id} = useParams()
+  const navigate = useNavigate()
 
-    let baseUrl = 'http://localhost:8000/api/v1'
+  let baseUrl = 'http://localhost:8000/api/v1'
 
     const getOnePostById = (post) => {
         fetch(baseUrl + '/posts/' + id, {
@@ -91,7 +90,7 @@ const PostDetail = (props) => {
         getOnePostById(id)
         getComments(post)
     }, [])
-
+    
  
     return(
     <>

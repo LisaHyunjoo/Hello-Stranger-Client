@@ -16,8 +16,8 @@ import Header from './component/Header'
 
 
 
-// let baseUrl = process.env.REACT_APP_BACKEND_URL
-let baseUrl = 'http://localhost:8000/api/v1'
+let baseUrl = process.env.REACT_APP_BACKEND_URL
+// let baseUrl = 'http://localhost:8000/api/v1'
 
 export default function App() {
   const [posts, setPosts] = useState([])
