@@ -7,7 +7,7 @@ const PostsList = (props) => {
     const navigate = useNavigate()
     return(
         <>
-        <button onClick={()=>{navigate("/posts/new")}} className="btn btn-primary">New Post</button>
+        <button onClick={()=>{navigate("/posts/new")}} className="btn btn-primary" id="addBtn">New Post</button>
         
         <div className="row row-cols-1 row-cols-md-3 g-4">
         {props.posts.map((post,id)=> {
@@ -17,7 +17,7 @@ const PostsList = (props) => {
                     <div className="card">
                         <img src="https://picsum.photos/800/400" className="card-img-top" alt=""/>
                         <div className="card-body">
-                        <h3 className="card-title" key={post.id} onClick={()=>{navigate(`${post.id}`)}}>{post.title}</h3>
+                        <h3 className="card-title" id="postlist" key={post.id} onClick={()=>{navigate(`${post.id}`)}}>{post.title}</h3>
                         </div>   
                     </div>
                 </div>    

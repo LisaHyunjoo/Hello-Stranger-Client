@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat&family=Merriweather&display=swap');
+
 *{
   background-color: rgb(242, 242, 234);
+  font-family: 'Fredoka One', cursive;
+}
+
+.app-home {
+  text-align: center;
+  margin: 50px;
 }
 
 .UserForm {
@@ -13,6 +21,46 @@
   margin: 30px auto;
 }
 
+#addBtn {
+  margin: 15px;
+}
+
+#edit-btn{
+  float:right;
+  margin: 10px 5px;
+}
+
+#delete-btn {
+  float: right;
+  margin: 10px;
+}
+
+#postlist {
+  font-family: 'Merriweather', serif;
+  font-weight:100;
+  text-align: center;
+}
+
+#post-title{
+  margin: 20px;
+  background-color: rgb(238, 228, 217);
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid rgb(184, 184, 170);
+}
+
+#post-content {
+  margin: 20px;
+  padding: 10px;
+  background-color: rgb(238, 228, 217);
+  min-height: 30vh;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid rgb(184, 184, 170);
+}
+
+#post-comment {
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 15px;
+}
 
 .header_div {
   /* width: 1200px; */

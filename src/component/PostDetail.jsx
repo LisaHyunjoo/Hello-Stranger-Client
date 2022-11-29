@@ -95,21 +95,24 @@ const PostDetail = (props) => {
  
     return(
     <>
-      <div className="card text">
-        <h3 className="card-header">{post.title}</h3>
-        <div className="card-body">
-        <h5 className="card-text">{post.content}</h5>
+      <div className="card text" >
+        <div className="card-body" id="card-body">
+          <h3 className="card-header" id="post-title">{post.title}</h3>
+          <h5 className="card-text" id="post-content">{post.content}</h5>
         </div>
       </div>
-      <button className="btn btn-warning" onClick={()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
-      <button className="btn btn-danger" onClick={()=>{props.deletePost(post.id)}}>Delete</button>
+      <button className="btn btn-danger" id="delete-btn"onClick={()=>{
+        alert('Do you want to delete the post?')
+        props.deletePost(post.id)}}>Delete</button>
+      <button className="btn btn-warning" id="edit-btn" onClick={
+        ()=>{navigate("/posts/"+ id + "/edit")}}>Edit</button>
 
       <WriteComment addComment={addComment}/>
         {comments.map((comment,id)=> {
         return(
           <section className="row g-2" key={comment.id}>
              <div className="col-auto">
-            <h5>{comment.content}</h5>
+            <h5 id="post-comment">{comment.content}</h5>
             </div>
             <div className="col-auto">
             <button className="btn btn-secondary mb-2" onClick={()=>{deleteComment(comment.id)}}>X</button> 
