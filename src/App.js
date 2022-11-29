@@ -12,6 +12,7 @@ import EditPost from "./component/EditPost"
 import {Navbar, Container } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Header from './component/Header'
 
 
 
@@ -108,14 +109,14 @@ export default function App() {
         return []
       }
     }).then(data => {
-      console.log(data.data)
+      // console.log(data.data)
       setPosts(data.data)
     })
   }
 
 
   const addPost = (post) => {
-    fetch(baseUrl + '/posts', {
+    fetch(baseUrl + '/posts/', {
       method: 'POST',
       body: JSON.stringify(
           {title: post.title,
@@ -187,6 +188,7 @@ export default function App() {
 
   return (
     <>
+      <Header></Header>
       <Navbar className="navbar navbar-expand-lg bg-info">
         <Container className='nav-container bg-info'>
           <Navbar.Brand className="nav-link active bg-info" aria-current="page" as={Link} to="/">Home</Navbar.Brand>

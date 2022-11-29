@@ -22,7 +22,7 @@ const PostDetail = (props) => {
                 return []
             }
         }) .then(data => {
-            console.log('data',data.data)
+            // console.log('data',data.data)
             setPost(data.data)
         })
     }

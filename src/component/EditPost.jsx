@@ -5,7 +5,7 @@ const EditPost = (props) => {
     const [post, setPost] = useState({})
     let {id} = useParams()
 
-    let baseUrl = 'localhost:8000/api/v1'
+    let baseUrl = 'http://localhost:8000/api/v1'
 
     const getOnePostById = (id) => {
         fetch(baseUrl + "/posts/" + id, {
