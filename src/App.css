@@ -10,6 +10,14 @@
   margin: 50px;
 }
 
+#username, #email, #password {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#post-box {
+  margin: 10px;
+}
+
 .UserForm {
   width: 500px;
   text-align: center;

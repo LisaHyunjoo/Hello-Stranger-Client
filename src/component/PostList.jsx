@@ -9,7 +9,7 @@ const PostsList = (props) => {
         <>
         <button onClick={()=>{navigate("/posts/new")}} className="btn btn-primary" id="addBtn">New Post</button>
         
-        <div className="row row-cols-1 row-cols-md-3 g-4">
+        <div className="row row-cols-1 row-cols-md-3 g-4" id="post-box">
         {props.posts.map((post,id)=> {
             return(
                 <>
